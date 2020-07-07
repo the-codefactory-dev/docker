@@ -1,6 +1,6 @@
-FROM python:3.7-ubuntu
+FROM amazonlinux:latest
 
-RUN apk --no-cache add \
+RUN yum update -y && yum install -y \
   ca-certificates \
   groff \
   less \
@@ -11,10 +11,13 @@ RUN apk --no-cache add \
   git \
   ca-certificates \
   bash \
-  jq
+  jq \
+  unzip \
+  tar \
+  python3
 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN curl -O https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py --user && rm get-pip.py
 
-RUN unzip awscliv2.zip
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install && rm -rf aws/*
 
-RUN ./aws/install
+ENTRYPOINT ["/bin/bash"]
