@@ -16,8 +16,8 @@ RUN yum update -y && yum install -y \
   tar \
   python3
 
-RUN curl -O https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py --user && rm get-pip.py
-
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install && rm -rf aws/*
+
+RUN amazon-linux-extras install java-openjdk11
 
 ENTRYPOINT ["/bin/bash"]
